@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="Avinash Shukla">
+  <title>Volume campaigns</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/foundation/5.0.2/css/foundation.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css_volume_campaigns/style.css">
+</head>
+
+<body>
+  <main>
+    <nav class="top-bar" data-topbar>
+      <ul class="title-area">
+          <li class="name">
+             
+          </li>
+
+      </ul>
+      <section class="top-bar-section">
+          <ul class="left">
+              <li class="name">
+                  <a style="color: white;">Volume Campaigns</a>
+              </li>
+              <li class="name">
+                  <a href="index.html">Combo Campaigns</a>
+              </li>
+
+          </ul>
+      </section>
+  </nav>
+      <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-6 col-xs-12">
+          <h4 class="badge-pill badge-light mt-3 mb-3 p-2 text-center">Products List</h4>
+          <div class="row">
+            <div class="col-sm-6 col-md-6 col-lg-6 col-xs-6">
+              <div class="product">
+                <img class="product-img" src="./img_volume_campaigns/coca_cola_2l.jpg" alt="prd1" onmouseover="animateImg(this)"
+                  onmouseout="normalImg(this)" />
+                <div class="card-body">
+                  <h5 class="card-title text-info bold product-name">Coca Cola 2l</h5>
+                  <p class="card-text text-success product-campaign-price">85 SEK - Campaign Price for 2</p>
+                  <p class="card-text text-success product-price">50 SEK - Regular Price for 1</p>
+                  <button class="tiny" type="button"
+                    data-action="add-to-cart">Add to cart</button>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-md-6 col-lg-6 col-xs-6">
+              <div class="product">
+                <img class="product-img" src="./img_volume_campaigns/coca_cola_1l.jpeg" alt="prd2" onmouseover="animateImg(this)"
+                  onmouseout="normalImg(this)" />
+                <div class="card-body">
+                  <h5 class="card-title text-info product-name">Coca Cola 1l</h5>
+                  <p class="card-text text-success product-campaign-price">20 SEK - Campaign Price for 2</p>
+                  <p  class="card-text text-success product-price">15 SEK - Regular Price for 1</p>
+                  <button class="tiny" type="button"
+                    data-action="add-to-cart">Add to cart</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-6 col-xs-12">
+          <h4 class="badge-pill badge-light mt-3 mb-3 p-2 text-center">Cart items</h4>
+          <div class="cart"></div>
+        </div>
+      </div>
+  </main>
+
+  <script>
+    "use strict";
+    let cart = [];
+    let cartTotal = 0;
+    const cartDom = document.querySelector(".cart");
+    const addtocartbtnDom = document.querySelectorAll('[data-action="add-to-cart"]');
+
+    addtocartbtnDom.forEach(addtocartbtnDom => {
+      addtocartbtnDom.addEventListener("click", () => {
+        const productDom = addtocartbtnDom.parentNode.parentNode;
+        const product = {
+          img: productDom.querySelector(".product-img").getAttribute("src"),
+          name: productDom.querySelector(".product-name").innerText,
+          price: productDom.querySelector(".product-price").innerText,
+          price_camp: productDom.querySelector(".product-campaign-price").innerText,
+          quantity: 2
+        };
+
+        const IsinCart = cart.filter(cartItem => cartItem.name === product.name).length > 0;
+        if (IsinCart === false) {
+          cartDom.insertAdjacentHTML("beforeend", `
+  <div class="d-flex flex-row shadow-sm card cart-items mt-2 mb-3 animated flipInX">
+    <div class="p-2">
+        <img src="${product.img}" alt="${product.name}" style="max-width: 50px;"/>
+        <div class="p-2 mt-3">
+      <p class="text-danger">Minimum order quantity: 2</p>
+    </div>
+    </div>
+    <div class="p-2 mt-3">
+        <p class="text-info cart_item_name">${product.name}</p>
+    </div>
+    <div class="p-2 mt-3">
+        <p style="display:none" class="text-success cart_item_price" >${product.price}</p>
+    </div>
+    <div class="p-2 mt-3">
+        <p class="text-success cart_item_price_camp"  >${product.price_camp}</p>
+    </div>
+    
+    <div class="p-2 mt-3 ml-auto">
+        <button class="btn badge badge-secondary" type="button" data-action="increase-item">&plus;
+    </div>
+    <div class="p-2 mt-3">
+      <p class="text-success cart_item_quantity">${product.quantity}</p>
+    </div>
+    
+    <div class="p-2 mt-3">
+      <button class="btn badge badge-info" type="button" data-action="decrease-item">&minus;
+    </div>
+    <div class="p-2 mt-3">
+      <button class="btn badge badge-danger" style="display:none" type="button" data-action="remove-item">&times;
+    </div>
+   
+  </div>
+  
+  `);
+
+          if (document.querySelector('.cart-footer') === null) {
+            cartDom.insertAdjacentHTML("afterend", `
+      <div class="d-flex flex-row shadow-sm card cart-footer mt-2 mb-3 animated flipInX">
+        <div class="p-2">
+          <button class="btn badge-danger" type="button" data-action="clear-cart">Clear Cart
+        </div>
+        <div class="p-2 ml-auto">
+          <button class="btn badge-dark" type="button" data-action="check-out">Pay <span class="pay"></span> 
+            &#10137;
+        </div>
+      </div>`);
+          }
+
+          addtocartbtnDom.innerText = "In cart";
+          addtocartbtnDom.disabled = true;
+          cart.push(product);
+
+          const cartItemsDom = cartDom.querySelectorAll(".cart-items");
+          cartItemsDom.forEach(cartItemDom => {
+
+            if (cartItemDom.querySelector(".cart_item_name").innerText === product.name) {
+
+              cartTotal += 1
+                * parseInt(cartItemDom.querySelector(".cart_item_price_camp").innerText);
+              document.querySelector('.pay').innerText = cartTotal + " SEK";
+
+              // increase item in cart
+              cartItemDom.querySelector('[data-action="increase-item"]').addEventListener("click", () => {
+                cart.forEach(cartItem => {
+                  if (cartItem.name === product.name) {
+                    cartItemDom.querySelector(".cart_item_quantity").innerText = ++cartItem.quantity;
+                    cartItemDom.querySelector(".cart_item_price").innerText = parseInt(cartItem.quantity) *
+                      parseInt(cartItem.price) + " SEK";
+                    cartTotal += parseInt(cartItem.price)
+                    document.querySelector('.pay').innerText = cartTotal + " SEK";
+                  }
+                });
+              });
+
+              // decrease item in cart
+              cartItemDom.querySelector('[data-action="decrease-item"]').addEventListener("click", () => {
+                cart.forEach(cartItem => {
+                  if (cartItem.name === product.name) {
+                    if (cartItem.quantity > 2) {
+                      cartItemDom.querySelector(".cart_item_quantity").innerText = --cartItem.quantity;
+                      cartItemDom.querySelector(".cart_item_price").innerText = parseInt(cartItem.quantity) *
+                        parseInt(cartItem.price) + " SEK";
+                      cartTotal -= parseInt(cartItem.price)
+                      document.querySelector('.pay').innerText = cartTotal + " SEK";
+                    }
+                  }
+                });
+              });
+
+              //remove item from cart
+              cartItemDom.querySelector('[data-action="remove-item"]').addEventListener("click", () => {
+                cart.forEach(cartItem => {
+                  if (cartItem.name === product.name) {
+                    cartTotal -= parseInt(cartItemDom.querySelector(".cart_item_price").innerText);
+                    document.querySelector('.pay').innerText = cartTotal + " SEK";
+                    cartItemDom.remove();
+                    cart = cart.filter(cartItem => cartItem.name !== product.name);
+                    addtocartbtnDom.innerText = "Add to cart";
+                    addtocartbtnDom.disabled = false;
+                  }
+                  if (cart.length < 1) {
+                    document.querySelector('.cart-footer').remove();
+                  }
+                });
+              });
+
+              //clear cart
+              document.querySelector('[data-action="clear-cart"]').addEventListener("click", () => {
+                cartItemDom.remove();
+                cart = [];
+                cartTotal = 0;
+                if (document.querySelector('.cart-footer') !== null) {
+                  document.querySelector('.cart-footer').remove();
+                }
+                addtocartbtnDom.innerText = "Add to cart";
+                addtocartbtnDom.disabled = false;
+              });
+
+              document.querySelector('[data-action="check-out"]').addEventListener("click", () => {
+                if (document.getElementById('paypal-form') === null) {
+                  checkOut();
+                }
+              });
+            }
+          });
+        }
+      });
+    });
+
+    function animateImg(img) {
+      img.classList.add("animated", "shake");
+    }
+
+    function normalImg(img) {
+      img.classList.remove("animated", "shake");
+    }
+
+    
+  </script>
+</body>
+
+</html>

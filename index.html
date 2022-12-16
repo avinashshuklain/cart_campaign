@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Avinash Shukla">
+    <title>Combo Campaigns</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/foundation/5.0.2/css/foundation.css">
+    <link rel="stylesheet" href="css_combo_campaigns/style.css">
+</head>
+
+<body>
+    <main>
+        <nav class="top-bar" data-topbar>
+            <ul class="title-area">
+                <li class="name">
+                   
+                </li>
+
+            </ul>
+            <section class="top-bar-section">
+                <ul class="left">
+                    <li class="name">
+                        <a href="index_volume.html">Volume Campaigns</a>
+                    </li>
+                    <li class="name">
+                        <a>Combo Campaigns</a>
+                    </li>
+
+                </ul>
+            </section>
+        </nav>
+       
+        <div class="medium-8 columns">
+            <h1>Products List</h1>
+            <div class="products">
+                <div class="product medium-4 columns" data-name="Product1" data-price="30" data-id="0">
+                    <img src="./img_combo_campaigns/product.jpeg" alt="Product1" />
+                    <h3>Product1</h3>
+                    <label>Price: 30 SEK</label>
+                    <label>EAN: 5000112637922</label>
+                    <input type="hidden" class="count" value="1" />
+                    <button class="tiny">Add to cart</button>
+                </div>
+                <div class="product medium-4 columns" data-name="Product2" data-price="30" data-id="1">
+                    <img src="./img_combo_campaigns/product.jpeg" alt="Product2" />
+                    <h3>Product2</h3>
+                    <label>Price: 30 SEK</label>
+                    <label>EAN: 5000112637939</label>
+                    <input type="hidden" class="count" value="1" visibility="hidden" />
+                    <button class="tiny">Add to cart</button>
+                </div>
+                <div class="product medium-4 columns" data-name="Product3" data-price="30" data-id="2">
+                    <img src="./img_combo_campaigns/product.jpeg" alt="Product3" />
+                    <h3>Product3</h3>
+                    <label>Price: 30 SEK</label>
+                    <label>EAN: 7310865004703</label>
+                    <input type="hidden" class="count" value="1" />
+                    <button class="tiny">Add to cart</button>
+                </div>
+                <div class="product medium-4 columns" data-name="Product4" data-price="30" data-id="3">
+                    <img src="./img_combo_campaigns/product.jpeg" alt="Product4" />
+                    <h3>Product4</h3>
+                    <label>Price: 30 SEK</label>
+                    <label>EAN: 7340005404261</label>
+                    <input type="hidden" class="count" value="1" />
+                    <button class="tiny">Add to cart</button>
+                </div>
+                <div class="product medium-4 columns" data-name="Product5" data-price="30" data-id="4">
+                    <img src="./img_combo_campaigns/product.jpeg" alt="Product5" />
+                    <h3>Product5</h3>
+                    <label>Price: 30 SEK</label>
+                    <label>EAN: 7310532109090</label>
+                    <input type="hidden" class="count" value="1" />
+                    <button class="tiny">Add to cart</button>
+                </div>
+                <div class="product medium-4 columns" data-name="Product6" data-price="30" data-id="5">
+                    <img src="./img_combo_campaigns/product.jpeg" alt="Product6" />
+                    <h3>Product6</h3>
+                    <label>Price: 30 SEK</label>
+                    <label>EAN: 7611612222105</label>
+                    <input type="hidden" class="count" value="1" />
+                    <button class="tiny">Add to cart</button>
+                </div>
+            </div>
+        </div>
+        <div class="medium-4  columns">
+            <div class="cart">
+                <h1>Cart items</h1>
+                <div class="row">
+                    <div class="medium-6 columns">
+                        <button class="tiny secondary" id="clear">Clear the cart</button>
+                    </div>
+                    <div class="medium-6 columns">
+                        <button class="tiny disabled" title="Work in progress">Checkout</button>
+                    </div>
+                </div>
+                <div id="cartItems">Loading cart...</div>
+                Total Price: <strong id="totalPrice">0 SEK</strong>
+            </div>
+        </div>
+        
+        <script type="text/template" id="cartT">
+  <% _.each(items, function (item) { %> <div class = "panel"> <h3> <%= item.name %> </h3>  <span class="label">
+<%= item.count %> piece<% if(item.count > 1)
+{%>s
+<%}%> selected</span > </div>
+<% }); %>
+</script>
+    </main>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js'></script>
+    <script src="./js_combo_campaigns/script.js"></script>
+</body>
+
+</html>
